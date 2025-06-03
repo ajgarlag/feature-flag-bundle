@@ -1,0 +1,11 @@
+imports:
+    - { resource: ../config/default.yml }
+
+framework:
+    http_method_override: false
+    # feature_flag:
+    #     enabled: true
+
+services:
+    Ajgarlag\FeatureFlagBundle\Tests\Fixtures\InvalidMethodFeature:
+        autoconfigure: true

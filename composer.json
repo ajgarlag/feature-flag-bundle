@@ -1,0 +1,47 @@
+{
+    "name": "ajgarlag/feature-flag-bundle",
+    "type": "library",
+    "description": "Provides a feature flag mechanism",
+    "keywords": ["feature", "flag", "flags", "toggle", "ab test", "rollout", "canary", "blue green", "kill switch"],
+    "homepage": "https://symfony.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fabien Potencier",
+            "email": "fabien@symfony.com"
+        },
+        {
+            "name": "Symfony Community",
+            "homepage": "https://symfony.com/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "psr/container": "^1.1|^2.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.75",
+        "phpunit/phpunit": "^11.5",
+        "symfony/framework-bundle": "^6.4||^7.3",
+        "symfony/http-kernel": "^6.4||^7.3",
+        "symfony/phpunit-bridge": "^7.3",
+        "symfony/twig-bundle": "^6.4||^7.3",
+        "symfony/var-dumper": "^6.4||^7.3",
+        "symfony/yaml": "^6.4||^7.3",
+        "twig/twig": "^2.12||^3.0"
+    },
+    "autoload": {
+        "psr-4": { "Ajgarlag\\FeatureFlagBundle\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Ajgarlag\\FeatureFlagBundle\\Tests\\": "tests/" }
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "preferred-install": {
+            "symfony/framework-bundle": "source",
+            "*": "dist"
+        },
+        "sort-packages": true
+    }
+}

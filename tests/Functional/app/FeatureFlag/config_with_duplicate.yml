@@ -1,0 +1,15 @@
+imports:
+    - { resource: ../config/default.yml }
+
+framework:
+    http_method_override: false
+    # feature_flag:
+    #     enabled: true
+
+services:
+    feature.first:
+        class: 'Ajgarlag\FeatureFlagBundle\Tests\Fixtures\ClassFeature'
+        autoconfigure: true
+    feature.second:
+        class: 'Ajgarlag\FeatureFlagBundle\Tests\Fixtures\ClassFeature'
+        autoconfigure: true
