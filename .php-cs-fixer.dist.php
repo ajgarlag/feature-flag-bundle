@@ -13,6 +13,7 @@ EOS;
 
 $finder = (new PhpCsFixer\Finder())
     ->in(__DIR__)
+    ->exclude('tests/bin')
 ;
 
 return (new PhpCsFixer\Config())
