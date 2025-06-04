@@ -68,6 +68,6 @@ final class FeatureFlagDataCollector extends DataCollector implements LateDataCo
 
     public function getName(): string
     {
-        return 'feature_flag';
+        return 'ajgarlag.feature_flag';
     }
 }
