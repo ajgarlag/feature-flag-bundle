@@ -62,7 +62,7 @@ class FeatureFlagTest extends AbstractWebTestCase
     {
         static::bootKernel(['test_case' => 'FeatureFlag', 'root_config' => 'config.yml']);
         /** @var FeatureCheckerInterface $featureChecker */
-        $featureChecker = static::getContainer()->get('feature_flag.feature_checker');
+        $featureChecker = static::getContainer()->get('ajgarlag.feature_flag.feature_checker');
 
         // With default behavior
         $this->assertTrue($featureChecker->isEnabled(ClassFeature::class));
@@ -107,7 +107,7 @@ class FeatureFlagTest extends AbstractWebTestCase
     public function testFeatureFlagAssertionsWithDuplicate()
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Feature "Ajgarlag\FeatureFlagBundle\Tests\Fixtures\ClassFeature" already defined in the "feature_flag.provider.in_memory" provider.');
+        $this->expectExceptionMessage('Feature "Ajgarlag\FeatureFlagBundle\Tests\Fixtures\ClassFeature" already defined in the "ajgarlag.feature_flag.provider.in_memory" provider.');
 
         static::bootKernel(['test_case' => 'FeatureFlag', 'root_config' => 'config_with_duplicate.yml']);
     }
