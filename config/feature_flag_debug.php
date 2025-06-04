@@ -30,7 +30,7 @@ return static function (ContainerConfigurator $container) {
                 '$provider' => service('ajgarlag.feature_flag.provider'),
                 '$featureChecker' => service('debug.ajgarlag.feature_flag.feature_checker'),
             ])
-            ->tag('data_collector', ['template' => '@FeatureFlag/Collector/feature_flag.html.twig', 'id' => 'feature_flag'])
+            ->tag('data_collector', ['template' => '@FeatureFlag/Collector/feature_flag.html.twig', 'id' => 'ajgarlag.feature_flag'])
 
     ;
 };
