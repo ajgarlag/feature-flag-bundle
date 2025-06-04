@@ -26,12 +26,12 @@ class FeatureFlagPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasDefinition('feature_flag.feature_checker')) {
+        if (!$container->hasDefinition('ajgarlag.feature_flag.feature_checker')) {
             return;
         }
 
         $features = [];
-        foreach ($container->findTaggedServiceIds('feature_flag.feature') as $serviceId => $tags) {
+        foreach ($container->findTaggedServiceIds('ajgarlag.feature_flag.feature') as $serviceId => $tags) {
             $className = $this->getServiceClass($container, $serviceId);
             $r = $container->getReflectionClass($className);
 
@@ -42,7 +42,7 @@ class FeatureFlagPass implements CompilerPassInterface
             foreach ($tags as $tag) {
                 $featureName = ($tag['feature'] ?? '') ?: $className;
                 if (\array_key_exists($featureName, $features)) {
-                    throw new \RuntimeException(\sprintf('Feature "%s" already defined in the "feature_flag.provider.in_memory" provider.', $featureName));
+                    throw new \RuntimeException(\sprintf('Feature "%s" already defined in the "ajgarlag.feature_flag.provider.in_memory" provider.', $featureName));
                 }
 
                 $method = $tag['method'] ?? '__invoke';
@@ -54,7 +54,7 @@ class FeatureFlagPass implements CompilerPassInterface
                 }
 
                 $features[$featureName] = $container->setDefinition(
-                    '.feature_flag.feature',
+                    '.ajgarlag.feature_flag.feature',
                     (new Definition(\Closure::class))
                         ->setLazy(true)
                         ->setFactory([\Closure::class, 'fromCallable'])
@@ -63,7 +63,7 @@ class FeatureFlagPass implements CompilerPassInterface
             }
         }
 
-        $container->getDefinition('feature_flag.provider.in_memory')
+        $container->getDefinition('ajgarlag.feature_flag.provider.in_memory')
             ->setArgument('$features', $features)
         ;
 
@@ -71,16 +71,16 @@ class FeatureFlagPass implements CompilerPassInterface
             $this->loadDebugDefinitions($container);
         }
 
-        if (!$container->has('feature_flag.data_collector')) {
+        if (!$container->has('ajgarlag.feature_flag.data_collector')) {
             return;
         }
 
-        foreach ($container->findTaggedServiceIds('feature_flag.feature_checker') as $serviceId => $tags) {
+        foreach ($container->findTaggedServiceIds('ajgarlag.feature_flag.feature_checker') as $serviceId => $tags) {
             $container->register('debug.'.$serviceId, TraceableFeatureChecker::class)
                 ->setDecoratedService($serviceId)
                 ->setArguments([
                     '$decorated' => new Reference('.inner'),
-                    '$dataCollector' => new Reference('feature_flag.data_collector'),
+                    '$dataCollector' => new Reference('ajgarlag.feature_flag.data_collector'),
                 ])
             ;
         }

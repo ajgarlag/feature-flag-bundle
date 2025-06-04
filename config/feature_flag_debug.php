@@ -19,16 +19,16 @@ use Ajgarlag\FeatureFlagBundle\Debug\TraceableFeatureChecker;
 return static function (ContainerConfigurator $container) {
     $container->services()
 
-        ->set('debug.feature_flag.feature_checker', TraceableFeatureChecker::class)
-            ->decorate('feature_flag.feature_checker')
+        ->set('debug.ajgarlag.feature_flag.feature_checker', TraceableFeatureChecker::class)
+            ->decorate('ajgarlag.feature_flag.feature_checker')
             ->args([
-                '$decorated' => service('debug.feature_flag.feature_checker.inner'),
+                '$decorated' => service('debug.ajgarlag.feature_flag.feature_checker.inner'),
             ])
 
-        ->set('feature_flag.data_collector', FeatureFlagDataCollector::class)
+        ->set('ajgarlag.feature_flag.data_collector', FeatureFlagDataCollector::class)
             ->args([
-                '$provider' => service('feature_flag.provider'),
-                '$featureChecker' => service('debug.feature_flag.feature_checker'),
+                '$provider' => service('ajgarlag.feature_flag.provider'),
+                '$featureChecker' => service('debug.ajgarlag.feature_flag.feature_checker'),
             ])
             ->tag('data_collector', ['template' => '@FeatureFlag/Collector/feature_flag.html.twig', 'id' => 'feature_flag'])
 

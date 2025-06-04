@@ -32,7 +32,7 @@ class FeatureFlagExtension extends Extension
         $loader->load('feature_flag.php');
 
         $container->registerForAutoconfiguration(ProviderInterface::class)
-            ->addTag('feature_flag.provider')
+            ->addTag('ajgarlag.feature_flag.provider')
         ;
 
         $container->registerAttributeForAutoconfiguration(
@@ -55,7 +55,7 @@ class FeatureFlagExtension extends Extension
                     $featureName ??= "{$className}::{$method}";
                 }
 
-                $definition->addTag('feature_flag.feature', [
+                $definition->addTag('ajgarlag.feature_flag.feature', [
                     'feature' => $featureName,
                     'method' => $method,
                 ]);
