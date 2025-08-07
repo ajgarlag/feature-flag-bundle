@@ -4,9 +4,6 @@ namespace Ajgarlag\FeatureFlagBundle\Debug;
 
 use Ajgarlag\FeatureFlagBundle\FeatureCheckerInterface;
 
-/**
- * @experimental
- */
 final class TraceableFeatureChecker implements FeatureCheckerInterface
 {
     /** @var array<string, array{status: 'resolved'|'enabled'|'disabled', value: mixed, calls: int}> */

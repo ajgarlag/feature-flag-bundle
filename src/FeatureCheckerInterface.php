@@ -2,9 +2,6 @@
 
 namespace Ajgarlag\FeatureFlagBundle;
 
-/**
- * @experimental
- */
 interface FeatureCheckerInterface
 {
     public function isEnabled(string $featureName): bool;
