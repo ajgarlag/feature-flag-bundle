@@ -5,9 +5,6 @@ namespace Ajgarlag\FeatureFlagBundle;
 use Ajgarlag\FeatureFlagBundle\Provider\ProviderInterface;
 use Symfony\Contracts\Service\ResetInterface;
 
-/**
- * @experimental
- */
 final class FeatureChecker implements FeatureCheckerInterface, ResetInterface
 {
     private array $cache = [];

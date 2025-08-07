@@ -2,9 +2,6 @@
 
 namespace Ajgarlag\FeatureFlagBundle\Provider;
 
-/**
- * @experimental
- */
 final class InMemoryProvider implements ProviderInterface
 {
     /**

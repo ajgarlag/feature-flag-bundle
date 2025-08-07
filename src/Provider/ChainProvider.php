@@ -2,9 +2,6 @@
 
 namespace Ajgarlag\FeatureFlagBundle\Provider;
 
-/**
- * @experimental
- */
 final class ChainProvider implements ProviderInterface
 {
     public function __construct(
