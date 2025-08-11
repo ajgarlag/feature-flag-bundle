@@ -5,7 +5,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use Ajgarlag\FeatureFlagBundle\DataCollector\FeatureFlagDataCollector;
 use Ajgarlag\FeatureFlagBundle\Debug\TraceableFeatureChecker;
 
-return static function (ContainerConfigurator $container) {
+return static function (ContainerConfigurator $container): void {
     $container->services()
 
         ->set('debug.ajgarlag.feature_flag.feature_checker', TraceableFeatureChecker::class)

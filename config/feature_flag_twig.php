@@ -5,7 +5,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use Ajgarlag\FeatureFlagBundle\Twig\Extension\FeatureFlagExtension;
 use Ajgarlag\FeatureFlagBundle\Twig\Extension\FeatureFlagRuntime;
 
-return static function (ContainerConfigurator $container) {
+return static function (ContainerConfigurator $container): void {
     $container->services()
 
         ->set('twig.runtime.ajgarlag.feature_flag', FeatureFlagRuntime::class)
