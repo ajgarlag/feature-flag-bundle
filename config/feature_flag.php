@@ -8,7 +8,7 @@ use Ajgarlag\FeatureFlagBundle\Provider\ChainProvider;
 use Ajgarlag\FeatureFlagBundle\Provider\InMemoryProvider;
 use Ajgarlag\FeatureFlagBundle\Provider\ProviderInterface;
 
-return static function (ContainerConfigurator $container) {
+return static function (ContainerConfigurator $container): void {
     $container->services()
 
         ->set('ajgarlag.feature_flag.provider.in_memory', InMemoryProvider::class)
