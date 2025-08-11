@@ -1,18 +1,23 @@
 {
     "name": "ajgarlag/feature-flag-bundle",
-    "type": "library",
+    "type": "symfony-bundle",
     "description": "Provides a feature flag mechanism",
     "keywords": ["feature", "flag", "flags", "toggle", "ab test", "rollout", "canary", "blue green", "kill switch"],
-    "homepage": "https://symfony.com",
+    "homepage": "https://github.com/ajgarlag/feature-flag-bundle",
     "license": "MIT",
     "authors": [
         {
-            "name": "Fabien Potencier",
-            "email": "fabien@symfony.com"
+            "name": "Adrien Roches",
+            "email": "adrien@roc-it.tech",
+            "homepage": "https://github.com/Neirda24"
         },
         {
-            "name": "Symfony Community",
-            "homepage": "https://symfony.com/contributors"
+            "name": "Hubert Lenoir",
+            "homepage": "https://github.com/Jean-Beru"
+        },
+        {
+            "name": "Community",
+            "homepage": "https://github.com/ajgarlag/feature-flag-bundle/contributors"
         }
     ],
     "require": {
