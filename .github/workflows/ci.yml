@@ -45,5 +45,3 @@ jobs:
       - run: ./vendor/bin/phpunit
 
       - run: ./vendor/bin/php-cs-fixer check
-        env:
-            PHP_CS_FIXER_IGNORE_ENV: 1
