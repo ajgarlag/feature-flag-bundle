@@ -12,17 +12,17 @@
         <ini name="error_reporting" value="-1"/>
     </php>
     <testsuites>
-        <testsuite name="Symfony FeatureFlag Component Test Suite">
-        <directory>./tests/</directory>
+        <testsuite name="FeatureFlag Bundle Test Suite">
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
     <source>
         <include>
-        <directory>./</directory>
+            <directory>./</directory>
         </include>
         <exclude>
-        <directory>./tests</directory>
-        <directory>./vendor</directory>
+            <directory>./tests</directory>
+            <directory>./vendor</directory>
         </exclude>
     </source>
 </phpunit>
