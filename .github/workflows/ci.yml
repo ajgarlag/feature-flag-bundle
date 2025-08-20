@@ -12,12 +12,17 @@ jobs:
       fail-fast: false
       matrix:
         php: ['8.2', '8.3', '8.4']
-        symfony_version: ['6.4.*', '7.3.*']
+        symfony: ['6.4.*', '7.3.*', '7.4.*', '8.0.*']
         include:
           - php: '8.1'
-            symfony_version: '6.4.*'
+            symfony: '6.4.*'
+        exclude:
+          - php: '8.2'
+            symfony: '8.0.*'
+          - php: '8.3'
+            symfony: '8.0.*'
 
-    name: PHP ${{ matrix.php }} Symfony ${{ matrix.symfony_version }}
+    name: PHP ${{ matrix.php }} Symfony ${{ matrix.symfony }}
 
     steps:
       - uses: actions/checkout@v4
@@ -30,9 +35,9 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: composer-${{ matrix.php }}-${{ matrix.symfony_version }}-${{ hashFiles('**/composer.json') }}
+          key: composer-${{ matrix.php }}-${{ matrix.symfony }}-${{ hashFiles('**/composer.json') }}
           restore-keys: |
-            composer-${{ matrix.php }}-${{ matrix.symfony_version }}-
+            composer-${{ matrix.php }}-${{ matrix.symfony }}-
 
       - uses: shivammathur/setup-php@v2
         with:
@@ -40,7 +45,7 @@ jobs:
           coverage: none
           extensions: :xdebug
 
-      - run: php ./tests/bin/pin-symfony-version.php "${{ matrix.symfony_version }}"
+      - run: php ./tests/bin/pin-symfony-version.php "${{ matrix.symfony }}"
 
       - run: composer update --no-progress --prefer-stable
 
