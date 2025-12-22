@@ -13,6 +13,7 @@ return static function (ContainerConfigurator $container): void {
             ->args([
                 '$decorated' => service('debug.ajgarlag.feature_flag.feature_checker.inner'),
             ])
+            ->tag('kernel.reset', ['method' => 'reset'])
 
         ->set('ajgarlag.feature_flag.data_collector', FeatureFlagDataCollector::class)
             ->args([
@@ -20,6 +21,6 @@ return static function (ContainerConfigurator $container): void {
                 '$featureChecker' => service('debug.ajgarlag.feature_flag.feature_checker'),
             ])
             ->tag('data_collector', ['template' => '@FeatureFlag/Collector/feature_flag.html.twig', 'id' => 'ajgarlag.feature_flag'])
-
+            ->tag('kernel.reset', ['method' => 'reset'])
     ;
 };
