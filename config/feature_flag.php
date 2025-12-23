@@ -27,6 +27,7 @@ return static function (ContainerConfigurator $container): void {
             ->args([
                 '$provider' => service('ajgarlag.feature_flag.provider'),
             ])
+            ->tag('kernel.reset', ['method' => 'reset'])
             ->alias(FeatureCheckerInterface::class, 'ajgarlag.feature_flag.feature_checker')
     ;
 };

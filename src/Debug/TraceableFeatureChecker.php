@@ -3,8 +3,9 @@
 namespace Ajgarlag\FeatureFlagBundle\Debug;
 
 use Ajgarlag\FeatureFlagBundle\FeatureCheckerInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
-final class TraceableFeatureChecker implements FeatureCheckerInterface
+final class TraceableFeatureChecker implements FeatureCheckerInterface, ResetInterface
 {
     /** @var array<string, array{status: 'resolved'|'enabled'|'disabled', value: mixed, calls: int}> */
     private array $resolvedValues = [];
@@ -47,5 +48,13 @@ final class TraceableFeatureChecker implements FeatureCheckerInterface
     public function getResolvedValues(): array
     {
         return $this->resolvedValues;
+    }
+
+    public function reset(): void
+    {
+        $this->resolvedValues = [];
+        if ($this->decorated instanceof ResetInterface) {
+            $this->decorated->reset();
+        }
     }
 }
