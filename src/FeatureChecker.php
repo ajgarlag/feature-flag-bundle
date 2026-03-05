@@ -7,6 +7,9 @@ use Symfony\Contracts\Service\ResetInterface;
 
 final class FeatureChecker implements FeatureCheckerInterface, ResetInterface
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $cache = [];
 
     public function __construct(
@@ -25,7 +28,7 @@ final class FeatureChecker implements FeatureCheckerInterface, ResetInterface
             return $this->cache[$featureName];
         }
 
-        $feature = $this->provider->get($featureName) ?? fn () => false;
+        $feature = $this->provider->get($featureName) ?? static fn () => false;
 
         return $this->cache[$featureName] = $feature();
     }

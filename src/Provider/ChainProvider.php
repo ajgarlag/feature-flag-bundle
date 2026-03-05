@@ -5,7 +5,7 @@ namespace Ajgarlag\FeatureFlagBundle\Provider;
 final class ChainProvider implements ProviderInterface
 {
     public function __construct(
-        /** @var list<ProviderInterface> */
+        /** @var iterable<ProviderInterface> */
         private readonly iterable $providers = [],
     ) {
     }
@@ -19,17 +19,5 @@ final class ChainProvider implements ProviderInterface
         }
 
         return null;
-    }
-
-    public function getNames(): array
-    {
-        $names = [];
-        foreach ($this->providers as $provider) {
-            foreach ($provider->getNames() as $name) {
-                $names[$name] = true;
-            }
-        }
-
-        return array_keys($names);
     }
 }

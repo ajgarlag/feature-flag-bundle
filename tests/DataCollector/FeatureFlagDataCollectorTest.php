@@ -13,10 +13,10 @@ class FeatureFlagDataCollectorTest extends TestCase
     public function testLateCollect()
     {
         $featureRegistry = new InMemoryProvider([
-            'feature_true' => fn () => true,
-            'feature_false' => fn () => false,
-            'feature_integer' => fn () => 42,
-            'feature_random' => fn () => random_int(1, 42),
+            'feature_true' => static fn () => true,
+            'feature_false' => static fn () => false,
+            'feature_integer' => static fn () => 42,
+            'feature_random' => static fn () => random_int(1, 42),
         ]);
         $traceableFeatureChecker = new TraceableFeatureChecker(new FeatureChecker($featureRegistry));
         $dataCollector = new FeatureFlagDataCollector($featureRegistry, $traceableFeatureChecker);
@@ -27,17 +27,17 @@ class FeatureFlagDataCollectorTest extends TestCase
         $traceableFeatureChecker->getValue('feature_integer');
         $traceableFeatureChecker->getValue('feature_integer');
 
-        $this->assertSame([], $dataCollector->getResolved());
+        $this->assertSame([], $dataCollector->getFeatures());
 
         $dataCollector->lateCollect();
 
         $data = array_map(
-            function (array $a): array {
+            static function (array $a): array {
                 $a['value'] = $a['value']->getValue();
 
                 return $a;
             },
-            $dataCollector->getResolved(),
+            $dataCollector->getFeatures(),
         );
         $this->assertSame(
             [
@@ -64,7 +64,5 @@ class FeatureFlagDataCollectorTest extends TestCase
             ],
             $data,
         );
-
-        $this->assertSame(['feature_random'], $dataCollector->getNotResolved());
     }
 }

@@ -2,12 +2,12 @@
 
 namespace Ajgarlag\FeatureFlagBundle\DependencyInjection\Compiler;
 
-use Ajgarlag\FeatureFlagBundle\Debug\TraceableFeatureChecker;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Exception\RuntimeException;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -25,21 +25,21 @@ class FeatureFlagPass implements CompilerPassInterface
             $r = $container->getReflectionClass($className);
 
             if (null === $r) {
-                throw new \RuntimeException(\sprintf('Invalid service "%s": class "%s" does not exist.', $serviceId, $className));
+                throw new RuntimeException(\sprintf('Invalid service "%s": class "%s" does not exist.', $serviceId, $className));
             }
 
             foreach ($tags as $tag) {
                 $featureName = ($tag['feature'] ?? '') ?: $className;
                 if (\array_key_exists($featureName, $features)) {
-                    throw new \RuntimeException(\sprintf('Feature "%s" already defined in the "ajgarlag.feature_flag.provider.in_memory" provider.', $featureName));
+                    throw new RuntimeException(\sprintf('Feature "%s" already defined in the "ajgarlag.feature_flag.provider.in_memory" provider.', $featureName));
                 }
 
                 $method = $tag['method'] ?? '__invoke';
                 if (!$r->hasMethod($method)) {
-                    throw new \RuntimeException(\sprintf('Invalid feature method "%s": method "%s::%s()" does not exist.', $serviceId, $r->getName(), $method));
+                    throw new RuntimeException(\sprintf('Invalid feature method "%s": method "%s::%s()" does not exist.', $serviceId, $r->getName(), $method));
                 }
                 if (!$r->getMethod($method)->isPublic()) {
-                    throw new \RuntimeException(\sprintf('Invalid feature method "%s": method "%s::%s()" must be public.', $serviceId, $r->getName(), $method));
+                    throw new RuntimeException(\sprintf('Invalid feature method "%s": method "%s::%s()" must be public.', $serviceId, $r->getName(), $method));
                 }
 
                 $features[$featureName] = $container->setDefinition(
@@ -59,20 +59,6 @@ class FeatureFlagPass implements CompilerPassInterface
         if ($container->hasDefinition('profiler')) {
             $this->loadDebugDefinitions($container);
         }
-
-        if (!$container->has('ajgarlag.feature_flag.data_collector')) {
-            return;
-        }
-
-        foreach ($container->findTaggedServiceIds('ajgarlag.feature_flag.feature_checker') as $serviceId => $tags) {
-            $container->register('debug.'.$serviceId, TraceableFeatureChecker::class)
-                ->setDecoratedService($serviceId)
-                ->setArguments([
-                    '$decorated' => new Reference('.inner'),
-                    '$dataCollector' => new Reference('ajgarlag.feature_flag.data_collector'),
-                ])
-            ;
-        }
     }
 
     private function getServiceClass(ContainerBuilder $container, string $serviceId): ?string
@@ -86,7 +72,7 @@ class FeatureFlagPass implements CompilerPassInterface
                 continue;
             }
 
-            return $definition->getClass();
+            return $container->getParameterBag()->resolveValue($definition->getClass());
         }
     }
 
