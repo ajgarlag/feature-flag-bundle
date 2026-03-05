@@ -8,6 +8,8 @@ use Ajgarlag\FeatureFlagBundle\Tests\Fixtures\ClassMethodFeature;
 use Ajgarlag\FeatureFlagBundle\Tests\Fixtures\NamedFeature;
 use Ajgarlag\FeatureFlagBundle\Tests\Functional\app\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\AbstractWebTestCase;
+use Symfony\Component\DependencyInjection\Exception\LogicException;
+use Symfony\Component\DependencyInjection\Exception\RuntimeException;
 
 class FeatureFlagTest extends AbstractWebTestCase
 {
@@ -71,7 +73,7 @@ class FeatureFlagTest extends AbstractWebTestCase
 
     public function testFeatureFlagAssertionsWithInvalidMethod()
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid feature method "Ajgarlag\FeatureFlagBundle\Tests\Fixtures\InvalidMethodFeature": method "Ajgarlag\FeatureFlagBundle\Tests\Fixtures\InvalidMethodFeature::invalid_method()" does not exist.');
 
         static::bootKernel(['test_case' => 'FeatureFlag', 'root_config' => 'config_with_invalid_method.yml']);
@@ -79,7 +81,7 @@ class FeatureFlagTest extends AbstractWebTestCase
 
     public function testFeatureFlagAssertionsWithInvalidMethodVisibility()
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid feature method "Ajgarlag\FeatureFlagBundle\Tests\Fixtures\InvalidMethodVisibilityFeature": method "Ajgarlag\FeatureFlagBundle\Tests\Fixtures\InvalidMethodVisibilityFeature::resolve()" must be public.');
 
         static::bootKernel(['test_case' => 'FeatureFlag', 'root_config' => 'config_with_invalid_method_visibility.yml']);
@@ -87,7 +89,7 @@ class FeatureFlagTest extends AbstractWebTestCase
 
     public function testFeatureFlagAssertionsWithDifferentMethod()
     {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Using the #[Ajgarlag\FeatureFlagBundle\Attribute\AsFeature(method: "different")] attribute on a method is not valid. Either remove the method value or move this to the top of the class (Ajgarlag\FeatureFlagBundle\Tests\Fixtures\DifferentMethodFeature).');
 
         static::bootKernel(['test_case' => 'FeatureFlag', 'root_config' => 'config_with_different_method.yml']);
@@ -95,7 +97,7 @@ class FeatureFlagTest extends AbstractWebTestCase
 
     public function testFeatureFlagAssertionsWithDuplicate()
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Feature "Ajgarlag\FeatureFlagBundle\Tests\Fixtures\ClassFeature" already defined in the "ajgarlag.feature_flag.provider.in_memory" provider.');
 
         static::bootKernel(['test_case' => 'FeatureFlag', 'root_config' => 'config_with_duplicate.yml']);

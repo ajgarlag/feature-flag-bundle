@@ -80,12 +80,12 @@ class AppKernel extends Kernel implements ExtensionInterface, ConfigurationInter
         $container->registerExtension(new TestDumpExtension());
     }
 
-    public function __sleep(): array
+    public function __serialize(): array
     {
         return ['varDir', 'testCase', 'rootConfig', 'environment', 'debug'];
     }
 
-    public function __wakeup(): void
+    public function __unserialize(array $data): void
     {
         foreach ($this as $k => $v) {
             if (\is_object($v)) {

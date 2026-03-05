@@ -13,19 +13,19 @@ return static function (ContainerConfigurator $container): void {
 
         ->set('ajgarlag.feature_flag.provider.in_memory', InMemoryProvider::class)
             ->args([
-                '$features' => abstract_arg('Defined in FeatureFlagPass.'),
+                abstract_arg('Closures collected from "ajgarlag.feature_flag.feature" tag'),
             ])
             ->tag('ajgarlag.feature_flag.provider')
 
         ->set('ajgarlag.feature_flag.provider', ChainProvider::class)
             ->args([
-                '$providers' => tagged_iterator('ajgarlag.feature_flag.provider'),
+                tagged_iterator('ajgarlag.feature_flag.provider'),
             ])
             ->alias(ProviderInterface::class, 'ajgarlag.feature_flag.provider')
 
         ->set('ajgarlag.feature_flag.feature_checker', FeatureChecker::class)
             ->args([
-                '$provider' => service('ajgarlag.feature_flag.provider'),
+                service('ajgarlag.feature_flag.provider'),
             ])
             ->tag('kernel.reset', ['method' => 'reset'])
             ->alias(FeatureCheckerInterface::class, 'ajgarlag.feature_flag.feature_checker')

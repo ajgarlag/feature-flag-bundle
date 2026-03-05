@@ -7,6 +7,7 @@ use Ajgarlag\FeatureFlagBundle\Provider\ProviderInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\LogicException;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\Routing\Router;
@@ -31,13 +32,13 @@ class FeatureFlagExtension extends Extension
 
                 if ($reflector instanceof \ReflectionClass) {
                     $className = $reflector->getName();
-                    $method = $attribute->method;
+                    $method = $attribute->method ?? '__invoke';
 
                     $featureName ??= $className;
                 } else {
                     $className = $reflector->getDeclaringClass()->getName();
                     if (null !== $attribute->method && $reflector->getName() !== $attribute->method) {
-                        throw new \LogicException(\sprintf('Using the #[%s(method: "%s")] attribute on a method is not valid. Either remove the method value or move this to the top of the class (%s).', AsFeature::class, $attribute->method, $className));
+                        throw new LogicException(\sprintf('Using the #[%s(method: "%s")] attribute on a method is not valid. Either remove the method value or move this to the top of the class (%s).', AsFeature::class, $attribute->method, $className));
                     }
 
                     $method = $reflector->getName();
