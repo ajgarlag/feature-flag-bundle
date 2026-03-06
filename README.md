@@ -165,17 +165,10 @@ class MyProvider implements ProviderInterface
     {
         // ...
     }
-
-    public function getNames(): array
-    {
-        // ...
-    }
 }
 ```
 
 The `get` method must return a `\Closure` if the provider has the feature, or `null` otherwise.
-
-The `getNames` method should return an array of all feature names provided by this provider.
 
 <details>
 <summary>Doctrine example</summary>
@@ -191,7 +184,7 @@ use Symfony\Component\FeatureFlag\Provider\ProviderInterface;
 final class DoctrineProvider implements ProviderInterface
 {
     public function __construct(
-        private readonly FeatureAssignmentRepository $featureAssignementRepository,
+        private readonly FeatureAssignmentRepository $featureAssignmentRepository,
     ) {
     }
 
@@ -201,13 +194,8 @@ final class DoctrineProvider implements ProviderInterface
         $context = [];
         
         return function () use ($featureName) {
-            return $this->featureAssignementRepository->featureIsEnabled($featureName, $context);
+            return $this->featureAssignmentRepository->featureIsEnabled($featureName, $context);
         };
-    }
-
-    public function getNames(): array
-    {
-        return $this->featureAssignementRepository->featureNames();
     }
 }
 ```
@@ -276,11 +264,6 @@ class GitlabProvider implements ProviderInterface
         );
         
         return fn () => $this->unleash->isEnabled($featureName, $context);
-    }
-
-    public function getNames(): array
-    {
-        return [];
     }
 }
 ```
