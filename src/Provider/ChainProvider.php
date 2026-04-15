@@ -10,7 +10,7 @@ final class ChainProvider implements ProviderInterface
     ) {
     }
 
-    public function get(string $featureName): ?\Closure
+    public function get(string $featureName): ?callable
     {
         foreach ($this->providers as $provider) {
             if ($feature = $provider->get($featureName)) {

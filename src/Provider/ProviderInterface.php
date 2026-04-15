@@ -13,7 +13,7 @@ namespace Ajgarlag\FeatureFlagBundle\Provider;
 interface ProviderInterface
 {
     /**
-     * @return ?\Closure(): mixed
+     * @return ?callable(): mixed
      */
-    public function get(string $featureName): ?\Closure;
+    public function get(string $featureName): ?callable;
 }
