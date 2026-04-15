@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class FeatureFlagDataCollectorTest extends TestCase
 {
-    public function testLateCollect()
+    public function testLateCollect(): void
     {
         $featureRegistry = new InMemoryProvider([
             'feature_true' => static fn () => true,

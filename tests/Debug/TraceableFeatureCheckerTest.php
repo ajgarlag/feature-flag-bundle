@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class TraceableFeatureCheckerTest extends TestCase
 {
-    public function testTraces()
+    public function testTraces(): void
     {
         $featureChecker = new FeatureChecker(new InMemoryProvider([
             'feature_true' => static fn () => true,

@@ -21,24 +21,24 @@ class FeatureCheckerTest extends TestCase
         ]));
     }
 
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $this->assertSame(42, $this->featureChecker->getValue('feature_integer'));
     }
 
-    public function testGetValueCache()
+    public function testGetValueCache(): void
     {
         $this->assertIsInt($value = $this->featureChecker->getValue('feature_random'));
         $this->assertSame($value, $this->featureChecker->getValue('feature_random'));
     }
 
-    public function testGetValueOnNotFound()
+    public function testGetValueOnNotFound(): void
     {
         $this->assertFalse($this->featureChecker->getValue('unknown_feature'));
     }
 
     #[DataProvider('provideIsEnabled')]
-    public function testIsEnabled(string $featureName, bool $expectedResult)
+    public function testIsEnabled(string $featureName, bool $expectedResult): void
     {
         $this->assertSame($expectedResult, $this->featureChecker->isEnabled($featureName));
     }
