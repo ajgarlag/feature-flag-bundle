@@ -18,7 +18,7 @@ class InMemoryProviderTest extends TestCase
         ]);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $feature = $this->provider->get('first');
         $this->assertIsCallable($feature);
@@ -29,12 +29,12 @@ class InMemoryProviderTest extends TestCase
         $this->assertSame(42, $feature());
     }
 
-    public function testGetLazy()
+    public function testGetLazy(): void
     {
         $this->assertIsCallable($this->provider->get('exception'));
     }
 
-    public function testGetNotFound()
+    public function testGetNotFound(): void
     {
         $feature = $this->provider->get('unknown');
 

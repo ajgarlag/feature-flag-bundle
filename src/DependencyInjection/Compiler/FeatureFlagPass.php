@@ -42,13 +42,10 @@ class FeatureFlagPass implements CompilerPassInterface
                     throw new RuntimeException(\sprintf('Invalid feature method "%s": method "%s::%s()" must be public.', $serviceId, $r->getName(), $method));
                 }
 
-                $features[$featureName] = $container->setDefinition(
-                    '.ajgarlag.feature_flag.feature',
-                    (new Definition(\Closure::class))
-                        ->setLazy(true)
-                        ->setFactory([\Closure::class, 'fromCallable'])
-                        ->setArguments([[new Reference($serviceId), $method]]),
-                );
+                $features[$featureName] = (new Definition(\Closure::class))
+                    ->setLazy(true)
+                    ->setFactory([\Closure::class, 'fromCallable'])
+                    ->setArguments([[new Reference($serviceId), $method]]);
             }
         }
 
