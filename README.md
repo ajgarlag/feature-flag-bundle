@@ -144,7 +144,7 @@ class SomeController
 
 ## 🧩 Providers
 
-Providers are responsible for returning the feature closures. You can create your own provider by implementing the
+Providers are responsible for returning the feature callables. You can create your own provider by implementing the
 `ProviderInterface`.
 
 Any service that implements `ProviderInterface` is automatically registered as a provider. The bundle comes with a
@@ -161,14 +161,14 @@ use Ajgarlag\FeatureFlagBundle\Provider\ProviderInterface;
 
 class MyProvider implements ProviderInterface
 {
-    public function get(string $featureName): ?\Closure
+    public function get(string $featureName): ?callable
     {
         // ...
     }
 }
 ```
 
-The `get` method must return a `\Closure` if the provider has the feature, or `null` otherwise.
+The `get` method must return a `callable` if the provider has the feature, or `null` otherwise.
 
 <details>
 <summary>Doctrine example</summary>
@@ -188,7 +188,7 @@ final class DoctrineProvider implements ProviderInterface
     ) {
     }
 
-    public function get(string $featureName): ?\Closure
+    public function get(string $featureName): ?callable
     {
         // Set context. Example: user identifier, IP, hostname, etc. 
         $context = [];
@@ -256,7 +256,7 @@ class GitlabProvider implements ProviderInterface
     ) {
     }
 
-    public function get(string $featureName): ?\Closure
+    public function get(string $featureName): ?callable
     {
         // Set context. Example: user identifier, IP, hostname, etc. 
         $context = new UnleashContext(
